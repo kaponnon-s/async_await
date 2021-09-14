@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+      <button onclick="asysc_await()">Get</button>
+      <button onclick="promise()">promise</button>
+      <div id="show"></div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      async function asysc_await() {
+        try {
+          let get = await axios.get(
+            "https://reqres.in/api/users/5"
+          );
+          document.getElementById("show").innerHTML = `<img src="${get.data.data.avatar}"><p>Name : ${get.data.data.first_name} ${get.data.data.last_name}</p>
+          <p>Email: ${get.data.data.email}</p>`;
+        } catch (err) {
+          console.log("err", err);
+        }
+      }
+      function promise() {
+        document.getElementById("show").innerHTML = ""
+        setTimeout(() => {
+          axios.get("https://reqres.in/api/users/5").then((res) => {
+            document.getElementById("show").innerHTML = `<img src="${res.data.data.avatar}"><p>Name : ${res.data.data.first_name} ${res.data.data.last_name}</p>
+            <p>Email: ${res.data.data.email}</p>`;
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
